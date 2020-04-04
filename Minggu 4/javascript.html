@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Tugas Javascript</title>
+	<style type="text/css">
+	input, select {
+	  	width: 100%;
+	  	padding: 12px 20px;
+	  	margin: 8px 0;
+	  	display: inline-block;
+	  	border: 1px solid #ccc;
+	  	border-radius: 4px;
+	  	box-sizing: border-box;
+	}
+
+	input[type=submit] {
+	  	width: 100%;
+	  	background-color: #4CAF50;
+	  	color: white;
+	  	padding: 14px 20px;
+	  	margin: 8px 0;
+	  	border: none;
+	  	border-radius: 4px;
+	  	cursor: pointer;
+	}
+
+	input[type=submit]:hover {
+	  	background-color: #45a049;
+	}
+	table {
+		width: 100%;
+	  	border-collapse: collapse;
+	}
+
+	table, td, th {
+		padding: 15px;
+	  	border: 1px solid black;
+	}
+	</style>
+</head>
+
+<body>
+	<div style="width: 500px; margin: 0 auto; margin-top: 80px">
+		<form>
+    		<label>NIM</label>
+	    	<select onchange="getData(event)" id="nim">
+	    		<option disabled selected>-- Pilih Data -- </option>
+	      		<option value="A11.2015.12345">A11.2015.12345 - Muh. Amin</option>
+	      		<option value="A11.2015.12346">A11.2015.12346 - Santoso</option>
+	      		<option value="A11.2015.12347">A11.2015.12347 - Sutrisno</option>
+	    	</select>
+			<label>Nama</label>
+			<input type="text" id="nama" value="" disabled="">
+			<label>Nilai Tugas</label>
+			<input type="number" max="100" id="tugas" placeholder="Masukan Nilai Tugas" required="" onkeyup="hitung();">
+			<label>Nilai UTS</label>
+			<input type="number" max="100" id="uts" placeholder="Masukan Nilai UTS" required="" onkeyup="hitung();">
+			<label>Nilai UAS</label>
+			<input type="number" max="100" id="uas" placeholder="Masukan Nilai UAS" required="" onkeyup="hitung();">
+			<hr>
+			<label>Nilai Akhir</label>
+			<input type="number" id="akhir" value="" disabled="">
+			<input type="button" value="Submit" onclick="addRow()" id="simpan"> 
+		</form>
+		<br><br>
+		<table id="table">
+			<thead>
+				<tr style="background-color: #d71149; color: #fff">
+					<th>NIM</th>
+					<th>NAMA</th>
+					<th>Nilai Akhir</th>
+					<th>Status</th>
+				</tr>
+			</thead>
+		</table>
+	</div>
+</body>
+<script type="text/javascript">
+function getData(e) {
+	if ( e.target.value == 'A11.2015.12345' ) {
+    	document.getElementById("nama").value = 'Muh. Amin';
+    } else if ( e.target.value == 'A11.2015.12346' ) {
+    	document.getElementById("nama").value = 'Santoso';
+    } else if ( e.target.value == 'A11.2015.12347' ) {
+    	document.getElementById("nama").value = 'Sutrisno';
+    }
+}
+
+function hitung()
+{
+	var nilaiTugas = document.getElementById('tugas').value * 0.40;
+	var nilaiUts = document.getElementById('uts').value * 0.30;
+	var nilaiUas = document.getElementById('uas').value * 0.30;
+
+	var hasilAkhir = parseInt(nilaiTugas) + parseInt(nilaiUts) + parseInt(nilaiUas);
+
+	if (!isNaN(hasilAkhir)) {
+		document.getElementById('akhir').value = hasilAkhir;
+	}
+}
+
+function addRow()
+{
+	"use strict";
+
+	var table = document.getElementById("table");
+    var row = document.createElement("tr");
+    var td1 = document.createElement("td");
+    var td2 = document.createElement("td");
+    var td3 = document.createElement("td");
+    var td4 = document.createElement("td");
+
+    td1.innerHTML = document.getElementById("nim").value;
+    td2.innerHTML  = document.getElementById("nama").value;
+    td3.innerHTML  = document.getElementById("akhir").value;
+
+    if ( document.getElementById("akhir").value > 60 ) {
+    	td4.innerHTML  = 'LULUS';
+    } else {
+    	td4.innerHTML  = 'TIDAK LULUS';
+    }
+
+    
+
+    row.appendChild(td1);
+    row.appendChild(td2);
+    row.appendChild(td3);
+    row.appendChild(td4);
+
+    table.children[0].appendChild(row);
+}
+</script>
+</html>
